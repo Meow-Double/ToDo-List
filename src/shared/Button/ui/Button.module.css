@@ -1,0 +1,14 @@
+.button {
+  background-color: #02b075;
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.button:focus-visible {
+  border: 2px solid #fff;
+}

@@ -1,0 +1,26 @@
+.list {
+  padding: 40px;
+}
+
+.list li {
+  margin-bottom: 10px;
+  background-color: #2a2e32;
+  padding: 12px;
+  border-radius: 4px;
+}
+
+.buttonCreate {
+  padding: 4px 10px;
+  font-size: 16px;
+}
+
+.titleBlock {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modalBody {
+  width: 400px;
+}

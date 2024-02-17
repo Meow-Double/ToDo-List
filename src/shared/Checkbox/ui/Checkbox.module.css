@@ -1,0 +1,34 @@
+.label {
+  position: relative;
+  padding-left: 24px;
+}
+
+.input {
+  width: 1;
+  height: 1;
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+.checkbox {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #02b075;
+  position: absolute;
+  left: 0;
+}
+
+.input:checked + .checkbox::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background-color: #02b075;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.input:focus-visible + .checkbox {
+  outline: 2px solid #fff;
+}
