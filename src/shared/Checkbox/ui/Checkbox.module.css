@@ -17,7 +17,10 @@
   position: absolute;
   left: 0;
 }
-
+.checked {
+  text-decoration: line-through;
+  font-style: italic;
+}
 .input:checked + .checkbox::before {
   content: '';
   width: 8px;

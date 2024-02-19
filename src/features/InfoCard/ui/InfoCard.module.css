@@ -4,3 +4,6 @@
   align-items: center;
   width: 100%;
 }
+.blocked {
+  background-color: rgb(31, 31, 31) !important;
+}

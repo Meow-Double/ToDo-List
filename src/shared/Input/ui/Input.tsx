@@ -1,49 +1,37 @@
 import { type FC, InputHTMLAttributes, PropsWithChildren } from 'react';
 
 import cx from 'classix';
+import { FieldValues, RegisterOptions, UseFormRegister } from 'react-hook-form';
 
 import styles from './Input.module.css';
-import { FieldValues, RegisterOptions, UseFormRegister } from 'react-hook-form';
-import { FormTypes } from 'features';
 
-// type Props = {
-//   register: UseFormRegister<FormTypes>;
-//   // name:string;
-// }  & InputHTMLAttributes<PropsWithChildren>;
 
-// type InputProps<T extends FieldValues> = {
-//   name: Path<T>;
-//   placeholder?: string;
-//   register: UseFormRegister<T>;
-// } & InputHTMLAttributes<PropsWithChildren>;
+export type Props = {
+  type?: TypeEnum;
+  register?: UseFormRegister<FieldValues>;
+  name?: string;
+  rules?: RegisterOptions;
+} & InputHTMLAttributes<PropsWithChildren>;
 
-interface InputProps
-  // extends Partial<Pick<UseFormMethods, 'register' | 'errors'>>,
-  extends InputT {
-  rules?: FieldValues;
-  register: UseFormRegister<FormTypes>
-  name: string;
-  type?: 'text' | 'email' | 'number';
+enum TypeEnum {
+  Text = 'text',
+  Number = 'number',
+  Email = 'email',
 }
 
-type InputT = InputHTMLAttributes<PropsWithChildren>;
-
-export const Input: FC<InputProps> = ({
+export const Input: FC<Props> = ({
   className,
-  register,
   name,
-  rules = {},
-  type,
+  rules,
+  register,
+  type = TypeEnum.Text,
 }): JSX.Element => {
   return (
     <input
-      className={cx(...[className, styles.input])}
+      className={cx(...[styles.input, className])}
       placeholder="Enter a name"
-      type={type ? type : 'text'}
-      // {...register(name)}
-      // name={name}
-      // ref={register && register(rules)}
+      type={type}
+      {...(name && register ? { ...register(name, rules) } : null)}
     />
   );
 };
-

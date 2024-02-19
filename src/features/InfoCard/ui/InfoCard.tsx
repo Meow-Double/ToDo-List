@@ -4,13 +4,17 @@ import EditIcon from '../../../assets/icons/edit.svg?react';
 import styles from './InfoCard.module.css';
 
 import { Checkbox } from 'shared';
+import cx from 'classix';
 
-export const InfoCard = ({ text }) => {
+export const InfoCard = ({ text, onClick, id, done }) => {
+  const handleCheck = () => {
+    onClick(id);
+  };
   return (
-    <li className={styles.card}>
+    <li className={cx(styles.card, done && styles.blocked)}>
       <div>
         <div>
-          <Checkbox text={text} />
+          <Checkbox text={text} onClick={handleCheck} />
         </div>
         <div>
           <div>date</div>

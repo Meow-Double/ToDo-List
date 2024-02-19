@@ -1,42 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
-import axios from 'axios';
-import { SubmitHandler, useForm } from 'react-hook-form';
-
-import PlusIcon from '../../../assets/icons/plus.svg?react';
+import PlusIcon from 'assets/icons/plus.svg?react';
 
 import styles from './AsideMenu.module.css';
 
 import { Input, Button } from 'shared';
+import { useTasks } from 'app/context/hooks/useTasks';
 
-// import cx from "classix";
-
-type GroupItems = {
-  id: number;
+export interface FormTypes extends FieldValues {
   text: string;
-};
-
-export type FormTypes = {
-  text: string;
-};
+}
 
 export const AsideMenu = (): JSX.Element => {
-  const [array, setArray] = useState<GroupItems[]>([]);
   const [activeItem, setActiveItem] = useState(-1);
 
-  const fetchGroup = async () => {
-    const { data } = await axios.get<GroupItems[]>(
-      'https://658b0e95ba789a96223860cb.mockapi.io/data',
-    );
-
-    setArray(data);
-
-    return data;
-  };
-
-  useEffect(() => {
-    fetchGroup();
-  }, []);
+  const { items } = useTasks();
 
   const onClickGroup = (index: number) => {
     setActiveItem(index);
@@ -46,18 +25,24 @@ export const AsideMenu = (): JSX.Element => {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<FormTypes>();
+  } = useForm<FormTypes>({
+    defaultValues: {
+      text: '',
+    },
+  });
 
   const onSubmit: SubmitHandler<FormTypes> = (data: FormTypes) => {
     console.log(data);
   };
 
-  // console.log({ ...register('text') });
+  if (!items.length) {
+    return <span>Подождите, грузит...</span>;
+  }
 
   return (
     <div className={styles.wrapper}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.inputBlock}>
-        {errors?.text && <span>Hello</span>}
+        {/* {errors?.text && <span>Заполни блять поле!!!</span>} */}
         <Input name="text" register={register} rules={{ required: true }} />
         <Button className={styles.addButton}>
           <PlusIcon />
@@ -65,7 +50,7 @@ export const AsideMenu = (): JSX.Element => {
       </form>
       <h2 className={styles.title}>Your groups:</h2>
       <ul className={styles.list}>
-        {array.map((obj, index) => (
+        {items?.map((obj, index) => (
           <li key={obj.id} className={activeItem === index ? styles.active : ''}>
             <button onClick={() => onClickGroup(index)}>text</button>
           </li>

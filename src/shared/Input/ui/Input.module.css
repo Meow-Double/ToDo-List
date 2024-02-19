@@ -13,5 +13,5 @@
   color: rgba(255, 255, 255, 0.4);
 }
 .input:focus-visible {
-  border: 2px solid #fff;
+  outline: 2px solid #fff;
 }

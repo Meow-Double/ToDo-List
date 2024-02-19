@@ -6,29 +6,21 @@ import styles from './InfoGroup.module.css';
 
 import { Form, InfoCard } from 'features';
 import { Button, Modal } from 'shared';
-
-type TItems = { id: number; text: string; groupId: number; done: boolean };
+import { useTasks } from 'app/context/hooks/useTasks';
+import { doneTask } from 'app/utils/doneTask';
 
 export const InfoGroup = () => {
-  const [items, setItems] = useState<TItems[]>([]);
-
-  const fetchItems = async () => {
-    const { data } = await axios.get<TItems[]>(
-      'https://658b0e95ba789a96223860cb.mockapi.io/items',
-    );
-
-    setItems(data);
-
-    return data;
-  };
-
   const [isOpen, setIsOpen] = useState(false);
+  const { tasks } = useTasks();
 
-  useEffect(() => {
-    fetchItems();
-  }, []);
+  if (!tasks.length) {
+    return <span>Ждите, идёт загрузка...</span>;
+  }
 
-  console.log(isOpen);
+  const handleCheckbox = (id) => {
+    const newTask = doneTask(tasks, id);
+    console.log(newTask);
+  };
 
   return (
     <div>
@@ -39,13 +31,13 @@ export const InfoGroup = () => {
         </Button>
       </div>
       <ul className={styles.list}>
-        {items.map((item) => (
-          <InfoCard key={item.id} {...item} />
+        {tasks.map((item) => (
+          <InfoCard key={item.id} {...item} onClick={(id) => handleCheckbox(id)} />
         ))}
       </ul>
       {isOpen && (
         <Modal className={styles.modalBody} setIsOpen={setIsOpen}>
-          <Form />
+          <Form setIsOpen={setIsOpen} />
         </Modal>
       )}
     </div>
