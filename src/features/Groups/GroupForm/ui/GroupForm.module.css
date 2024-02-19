@@ -1,0 +1,12 @@
+.inputBlock {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.addButton {
+  height: 32px;
+  width: 32px;
+}

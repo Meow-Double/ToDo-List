@@ -1,0 +1,28 @@
+.wrapper {
+  background-color: #272b2f;
+  height: 100vh;
+  max-width: 360px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  padding: 20px;
+  display: inline-block;
+}
+
+
+
+.title {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+.list {
+  padding: 4px;
+  background-color: #212529;
+  height: 90%;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}

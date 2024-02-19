@@ -1,7 +1,6 @@
-import { useContext } from "react";
-import { ItemsContext } from "../createContext";
+import { useContext } from 'react';
+import { TaskContext } from '..';
 
 export const useTasks = () => {
-    return useContext(ItemsContext);
-  };
-  
+  return useContext(TaskContext);
+};

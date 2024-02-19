@@ -1,24 +1,24 @@
-import { useEffect, useState } from 'react';
-
-import axios from 'axios';
+import { useState } from 'react';
 
 import styles from './InfoGroup.module.css';
 
+import { doneTask } from 'app/utils/doneTask';
 import { Form, InfoCard } from 'features';
 import { Button, Modal } from 'shared';
 import { useTasks } from 'app/context/hooks/useTasks';
-import { doneTask } from 'app/utils/doneTask';
+import { ITasks } from 'app/context/config/Types';
 
 export const InfoGroup = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { tasks } = useTasks();
+  const { tasks, error } = useTasks();
 
-  if (!tasks.length) {
+  if (error) {
     return <span>Ждите, идёт загрузка...</span>;
   }
 
-  const handleCheckbox = (id) => {
+  const handleCheckbox = (id: number) => {
     const newTask = doneTask(tasks, id);
+
     console.log(newTask);
   };
 
@@ -31,9 +31,17 @@ export const InfoGroup = () => {
         </Button>
       </div>
       <ul className={styles.list}>
-        {tasks.map((item) => (
-          <InfoCard key={item.id} {...item} onClick={(id) => handleCheckbox(id)} />
-        ))}
+        {!tasks.length ? (
+          <span>Ваши таски отсуствуют</span>
+        ) : (
+          tasks.map((item: ITasks) => (
+            <InfoCard
+              key={item.id}
+              {...item}
+              onClick={(id: number) => handleCheckbox(id)}
+            />
+          ))
+        )}
       </ul>
       {isOpen && (
         <Modal className={styles.modalBody} setIsOpen={setIsOpen}>

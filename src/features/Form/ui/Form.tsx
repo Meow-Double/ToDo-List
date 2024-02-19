@@ -1,17 +1,23 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
+
 import styles from './Form.module.css';
 
 import { Button, Input } from 'shared';
-
 import { useTasks } from 'app/context/hooks/useTasks';
+import { FC } from 'react';
+// import { addTask } from 'app/context/api/getTasks';
 
-export const Form = ({ setIsOpen }) => {
+export const Form: FC<{ setIsOpen: (bool: boolean) => void }> = ({ setIsOpen }) => {
   const { handleSubmit, register } = useForm();
 
-  const { AddTask } = useTasks();
+  const { tasks, addTask } = useTasks();
 
   const onSubmit: SubmitHandler<any> = (data) => {
-    AddTask(data);
+    const obj = {
+      text: data.task,
+      groupId: 1,
+    };
+    addTask(obj);
     setIsOpen(false);
   };
 
@@ -19,12 +25,17 @@ export const Form = ({ setIsOpen }) => {
     <form onSubmit={handleSubmit(onSubmit)} className={styles.from}>
       <label className={styles.label}>
         <span className={styles.title}>Name task</span>
-        <Input className={styles.input} name="task" register={register} />
+        <Input
+          className={styles.input}
+          name="task"
+          register={register}
+          rules={{ required: true }}
+        />
       </label>
-      <label className={styles.label}>
+      {/* <label className={styles.label}>
         <span className={styles.title}>Date</span>
         <Input className={styles.input} />
-      </label>
+      </label> */}
       <Button className={styles.button}>Create task</Button>
     </form>
   );

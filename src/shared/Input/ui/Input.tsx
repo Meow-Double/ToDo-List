@@ -5,7 +5,6 @@ import { FieldValues, RegisterOptions, UseFormRegister } from 'react-hook-form';
 
 import styles from './Input.module.css';
 
-
 export type Props = {
   type?: TypeEnum;
   register?: UseFormRegister<FieldValues>;

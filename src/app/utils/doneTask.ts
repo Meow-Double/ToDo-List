@@ -6,5 +6,6 @@ export const doneTask = (state, id) => {
     done: !current.done,
   };
   const newTasks = [...tasks, obj];
+
   return newTasks;
 };
