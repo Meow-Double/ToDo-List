@@ -5,17 +5,19 @@ import styles from './Form.module.css';
 import { Button, Input } from 'shared';
 import { useTasks } from 'app/context/hooks/useTasks';
 import { FC } from 'react';
+import { useGroups } from 'app/context/hooks/useGroups';
 // import { addTask } from 'app/context/api/getTasks';
 
 export const Form: FC<{ setIsOpen: (bool: boolean) => void }> = ({ setIsOpen }) => {
   const { handleSubmit, register } = useForm();
 
-  const { tasks, addTask } = useTasks();
+  const { addTask } = useTasks();
+  const { activeGroup } = useGroups();
 
   const onSubmit: SubmitHandler<any> = (data) => {
     const obj = {
       text: data.task,
-      groupId: 1,
+      groupId: activeGroup + 1,
     };
     addTask(obj);
     setIsOpen(false);
@@ -32,10 +34,6 @@ export const Form: FC<{ setIsOpen: (bool: boolean) => void }> = ({ setIsOpen }) 
           rules={{ required: true }}
         />
       </label>
-      {/* <label className={styles.label}>
-        <span className={styles.title}>Date</span>
-        <Input className={styles.input} />
-      </label> */}
       <Button className={styles.button}>Create task</Button>
     </form>
   );

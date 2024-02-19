@@ -10,11 +10,12 @@ import { useTasks } from 'app/context/hooks/useTasks';
 export const AsideMenu = (): JSX.Element => {
   const [activeItem, setActiveItem] = useState(-1);
 
-  const { groups } = useGroups();
+  const { groups, setActiveGroup, loading } = useGroups();
   const { fetchTasks } = useTasks();
 
   const handleActive = (index: number) => {
     setActiveItem(index);
+    setActiveGroup(index);
   };
 
   useEffect(() => {
@@ -34,15 +35,17 @@ export const AsideMenu = (): JSX.Element => {
       />
     ));
   };
-
+  
   return (
     <div className={styles.wrapper}>
       <GroupForm />
       <h2 className={styles.title}>Your groups:</h2>
       {groups.length ? (
         <ul className={styles.list}>{renderGroupCard()}</ul>
+      ) : loading ? (
+        <span>Загрузка ...</span>
       ) : (
-        <span>Подождите, грузит...</span>
+        <span>Отсуствуют группы</span>
       )}
     </div>
   );

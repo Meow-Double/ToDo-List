@@ -10,9 +10,9 @@ export const GroupContext: React.Context<any> = createContext({
 });
 
 export const GroupContextProvider = ({ children }: PropsWithChildren) => {
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [groups, setGroups] = useState<IGroups[]>([]);
-
+  const [activeGroup, setActiveGroup] = useState(-1);
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -34,7 +34,7 @@ export const GroupContextProvider = ({ children }: PropsWithChildren) => {
   };
 // -------------------------------------------------------------
   return (
-    <GroupContext.Provider value={{ loading, groups, fetchAddGroup }}>
+    <GroupContext.Provider value={{ loading, groups, fetchAddGroup, activeGroup, setActiveGroup }}>
       {children}
     </GroupContext.Provider>
   );

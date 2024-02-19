@@ -9,11 +9,10 @@ export const Home = (): JSX.Element => {
       <TaskContextProvider>
         <GroupContextProvider>
           <AsideMenu />
+          <div className="container">
+            <InfoGroup />
+          </div>
         </GroupContextProvider>
-
-        <div className="container">
-          <InfoGroup />
-        </div>
       </TaskContextProvider>
     </div>
   );

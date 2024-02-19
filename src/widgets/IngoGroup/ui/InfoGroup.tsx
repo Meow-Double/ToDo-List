@@ -7,14 +7,16 @@ import { Form, InfoCard } from 'features';
 import { Button, Modal } from 'shared';
 import { useTasks } from 'app/context/hooks/useTasks';
 import { ITasks } from 'app/context/config/Types';
+import { useGroups } from 'app/context/hooks/useGroups';
 
 export const InfoGroup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { tasks, error } = useTasks();
+  const { groups, activeGroup } = useGroups();
 
-  if (error) {
-    return <span>Ждите, идёт загрузка...</span>;
-  }
+  // if (error) {
+  //   return <span>Ждите, идёт загрузка...</span>;
+  // }
 
   const handleCheckbox = (id: number) => {
     const newTask = doneTask(tasks, id);
@@ -22,10 +24,14 @@ export const InfoGroup = () => {
     console.log(newTask);
   };
 
+  if (activeGroup === -1){
+    return <span>Выберите группу</span>
+  }
+
   return (
     <div>
       <div className={styles.titleBlock}>
-        <h1>Group - Text 1</h1>
+        <h1>Group - {groups[activeGroup]?.text}</h1>
         <Button className={styles.buttonCreate} onClick={() => setIsOpen(true)}>
           Create task
         </Button>
